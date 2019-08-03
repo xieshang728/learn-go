@@ -1,0 +1,13 @@
+*.iml
+.idea/
+target
+.classpath
+.settings
+.project
+.DS_Store
+log/
+logdir_IS_UNDEFINED
+web_log_IS_UNDEFINED
+zookeeper.out
+.log
+*.log
