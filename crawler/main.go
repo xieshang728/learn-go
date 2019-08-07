@@ -2,40 +2,17 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/gpmgo/gopm/modules/log"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
-	"golang.org/x/text/transform"
 	"io"
-	"io/ioutil"
-	"net/http"
+	"learn-go/crawler/engine"
+	"learn-go/crawler/zhenai/parser"
 )
 
 func main(){
-	resp,err := http.Get("http://www.zhenai.com/zhenghun")
-	if err != nil{
-		log.Error("Crawler error %s",err.Error())
-	}
 
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		log.Error("Crawler error %s",resp.StatusCode)
-		return
-	}
-
-	e := determineEncoding(resp.Body)
-
-	mineReader := transform.NewReader(resp.Body,e.NewDecoder())
-
-	result,err := ioutil.ReadAll(mineReader)
-
-	if err != nil{
-		log.Error("Crawler error %s",err)
-	}
-
-	fmt.Printf("%s",result)
+	engine.Run(engine.Request{Url:"http://www.zhenai.com/zhenghun",ParseFunc:parser.ParseCityList})
 
 }
 
